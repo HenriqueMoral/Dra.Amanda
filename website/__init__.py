@@ -15,9 +15,11 @@ def create_app():
     app.config['SECRET_KEY'] = '123456'
     #app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
 
-    params = urllib.parse.quote_plus("Driver={ODBC Driver 17 for SQL Server};SERVER=DESKTOP-QRED97F;DATABASE=Dra_Amanda;Trusted_Connection=yes")
-    app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc:///?odbc_connect=%s" % params
-    db.init_app(app)
+    # params = urllib.parse.quote_plus("Driver={ODBC Driver 17 for SQL Server};SERVER=DESKTOP-QRED97F;DATABASE=Dra_Amanda;Trusted_Connection=yes")
+    # app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc:///?odbc_connect=%s" % params
+    # db.init_app(app)
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://aphbqhssrpcfzb:28490ff730f56b712841b5017144d482316b31bddfac442591d121bdda8183db@ec2-54-85-113-73.compute-1.amazonaws.com:5432/d2rv8uojoafeul"
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
