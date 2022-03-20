@@ -2,12 +2,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
-from sqlalchemy.engine import URL
-import urllib
 
 
 db = SQLAlchemy()
-DB_NAME = "database.db"
+#DB_NAME = "database.db"
 #DB_NAME = 'Dra_Amanda'
 
 def create_app():
@@ -20,6 +18,8 @@ def create_app():
     # db.init_app(app)
 
     app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://aphbqhssrpcfzb:28490ff730f56b712841b5017144d482316b31bddfac442591d121bdda8183db@ec2-54-85-113-73.compute-1.amazonaws.com:5432/d2rv8uojoafeul"
+
+    db.init_app(app)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
