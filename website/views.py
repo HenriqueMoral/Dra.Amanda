@@ -27,8 +27,8 @@ def home():
     list_plano_saude = db.session.query(Plano)
     form.plano_saude.choices = [(g.id, g.descr) for g in list_plano_saude]
 
-    filtrovalor = db.session.query(Consulta)
-        
+    filtrovalor = db.session.query(Consulta).filter_by(user_id = current_user.id)
+
     if form.validate_on_submit():
 
         plano = form.plano_saude.data
