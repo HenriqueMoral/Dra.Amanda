@@ -1,0 +1,32 @@
+FEITO - Ajustar relações do banco de dados. Criar relação muitos pra muitos para um atendimento.
+    Tabela de Paciente deve estar relacionada a outra tabela. Ver video https://www.youtube.com/watch?v=4gRMV-wZTQs&list=PL1MAyGQ0x54E8VL6iwTHLvwWdHRdyVnWi&index=10&t=1s&ab_channel=darkyodeler
+    ASSOSSIATION OBJECT para relação Many-to-Many. Ver documentação https://docs.sqlalchemy.org/en/14/orm/basic_relationships.html
+
+FEITO - Criar icone para Configurações na direita do NavBar - https://fontawesome.com/icons/gear?s=solid
+
+FEITO - Fazer tabela de pacientes e procedimentos.
+
+FEITO - Ajustar botão de deletar da tabela - https://stackoverflow.com/questions/37319401/pass-date-object-through-javascript
+
+FEITO - Fazer formulário para inclusão de Procedimentos e Planos. Testar apagar Item existente relacionado a uma tabela.
+
+Fazer botão de deletar para configurações
+
+FEITO - Fazer tabela com capacidade de preenchimento e envio de vários valores conjuntos. Exemplo, incluir várias datas de faturamento.
+        Considerado Botão para Faturamento.
+
+Fazer auto-complete no nome do Paciente
+
+FEITO - Fazer filtro da tabela - Data de atendimento, faturado ou não faturado e plano de saúde
+
+Colocar código no GitHub
+
+Fazer deploy do site
+
+
+
+
+BUGS:
+
+    - Ordem de data está pelo dia.
+    - Botões da paginação da tabela estão esquisitos.

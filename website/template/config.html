@@ -1,0 +1,82 @@
+{% extends "base.html" %} {% block title %}Config{% endblock %}
+
+{% block content %}
+<h3 align="center">Configurações</h3>
+
+<div class="container border shadow-sm p-3 mb-5 bg-white rounded">
+  <div class="row">
+    <div class="col-3">
+      <table id="data" class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for procedimento in list_procedimento %}
+          <tr>
+            <td>{{ procedimento.descr }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <h5>Incluir Procedimento</h5>
+      <form method="POST">
+        {{ procedimentoform.hidden_tag() }}
+  
+        {{ procedimentoform.descr(class="form-control", placeholder = 'Insira o nome do plano') }}
+        
+        <div>
+        {{ procedimentoform.submitprocedimento(class="btn btn-secondary") }}
+        </div>
+        <br/>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container border shadow-sm p-3 mb-5 bg-white rounded">
+  <div class="row">
+    <div class="col-3">
+      <table id="data" class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for plano in list_plano %}
+          <tr>
+            <td>{{ plano.descr }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <h5>Incluir Plano</h5>
+      <form method="POST">
+        {{ planoform.hidden_tag() }}
+  
+        {{ planoform.descr(class="form-control", placeholder = 'Insira o nome do plano') }}
+        
+        <div>
+        {{ planoform.submitplano(class="btn btn-secondary") }}
+        </div>
+        <br/>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

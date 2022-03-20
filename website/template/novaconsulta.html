@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Inserir Consulta</h5>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+          {{ form.hidden_tag() }}
+    
+          {{ form.nome(class="form-control", placeholder = 'Insira o nome do paciente') }}
+          <br/>
+          {{ form.data_atendimento(class="form-control") }}
+          <br/>
+          {{ form.procedimento(class="form-control") }}
+          <br/>
+          {{ form.plano_saude(class="form-control") }}
+          <br/>
+          <div align="center">
+          {{ form.submit(class="btn btn-primary") }}
+          <a href="{{url_for('views.home')}}" class="btn btn-secondary">Fechar</a>
+          </div>
+          <br/>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+  $(document).ready(function(){
+    console.log("window is loaded")
+    $("#exampleModal").modal("show")
+  })
+</script>
+
+{% endblock %}

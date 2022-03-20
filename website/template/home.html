@@ -1,0 +1,189 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+
+{% block content %}
+<h3 align="center">Minhas Consultas</h3>
+
+<br/>
+<form method="POST">
+  <div class="row">
+    <div class="col" align="center">
+      {{ form.hidden_tag() }}
+      {{ form.plano_saude.label }}
+      {{ form.plano_saude(class="form-control") }}
+    </div>
+    <div class="col" align="center">
+      {{ form.hidden_tag() }}
+      {{ form.faturamento.label }}
+      {{ form.faturamento(class="form-control") }}
+    </div>
+    <div class="col" align="center">
+      {{ form.hidden_tag() }}
+      {{ form.data_de.label }}
+      {{ form.data_de(class="form-control") }}
+    </div>
+    <div class="col" align="center">
+      {{ form.hidden_tag() }}
+      {{ form.data_ate.label }}
+      {{ form.data_ate(class="form-control") }}
+    </div>
+    <div class="col-md-auto" style="display:flex;justify-content:center;align-items:center;">
+      {{ form.hidden_tag() }}
+      {{ form.submit(class="btn btn-primary") }}
+    </div>
+  </div>
+</form>
+<br/>
+
+<table id="data" class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">Data Atendimento</th>
+      <th scope="col">Procedimento</th>
+      <th scope="col">Plano de Saúde</th>
+      <th scope="col">Valor</th>
+      <th scope="col">Faturamento</th>
+      <th scope="col">Pagamento</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for consulta in filtrovalor %}
+    <tr>
+      <td>{{ consulta.paciente.nome }}</td>
+      <td>{{ consulta.data_atendimento.strftime('%d/%m/%Y') }}</td>
+      <td>{{ consulta.procedimento.descr }}</td>
+      <td>{{ consulta.plano.descr }}</td>
+      <td>
+        <div class="edit">
+          {% if consulta.valor == None %}
+            {{ "-" }}
+          {% else %}
+            {{ "R$%s"|format(consulta.valor) }}
+          {% endif %}
+        </div>
+        <input  type="text" 
+                class="txtedit" 
+                value="{{ consulta.valor }}" 
+                id="valor_{{ consulta.paciente.id }}_{{ consulta.procedimento.id }}_{{ consulta.plano.id }}_{{ consulta.data_atendimento }}">
+
+      </td>
+      <td>
+        {% if consulta.faturamento == None %}
+          {{ "Aberto" }}
+        <button type="button" class="close" onClick="faturarConsulta({{ consulta.paciente.id }}, 
+                                                                    {{ consulta.procedimento.id }}, 
+                                                                    {{ consulta.plano.id }}, 
+                                                                    '{{ consulta.data_atendimento }}')">
+          <span aria-hidden="true"><i class="fa-solid fa-dollar-sign"></i></span>
+        </button>
+        {% else %}
+          {{ consulta.faturamento.strftime('%d/%m/%Y') }}
+        {% endif %}
+
+      </td>
+      <td align="center">
+        {% if consulta.pagamento == True %}
+          <span class="fa-solid fa-check fa-lg"></span>
+        {% else %}
+          <span class="fa-solid fa-xmark fa-lg"></span>
+        {% endif %}
+        <button type="button" class="close" onClick="deleteConsulta({{ consulta.paciente.id }}, 
+                                                                    {{ consulta.procedimento.id }}, 
+                                                                    {{ consulta.plano.id }}, 
+                                                                    '{{ consulta.data_atendimento }}')">
+          <span class="fa-solid fa-trash"></span>
+        </button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<style>
+  .edit{
+   width: 70%;
+   height: 25px;
+  }
+  .editMode{
+   border: 1px solid black;
+  }
+  .txtedit{
+   display: none;
+   width: 70%;
+   height: 30px;
+  }
+</style>
+
+<a href="{{url_for('views.novaconsulta')}}" class="btn btn-outline-success">Cadastrar Consulta</a>
+
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function () {
+      $('#data').DataTable({
+        columns: [
+          null,
+          {searchable: false},
+          null,
+          {searchable: false},
+          null,
+          {searchable: false},
+          {orderable: false, searchable: false}],
+      });
+    });
+  </script>
+  <script type='text/javascript'>
+    $(document).ready(function(){
+      
+     // Show Input element
+     $('.edit').click(function(){
+      $('.txtedit').hide();
+      $(this).next('.txtedit').show().focus();
+      $(this).hide();
+     });
+     
+     // Save data
+     $(".txtedit").focusout(function(){
+       
+      // Get edit id, field name and value
+      var id = this.id;
+      var split_id = id.split("_");
+      var campo = split_id[0];
+      var paciente_id = split_id[1];
+      var procedimento_id = split_id[2];
+      var plano_id = split_id[3];
+      var data_atendimento = split_id[4];
+      var value = $(this).val();
+       
+      // Hide Input element
+      $(this).hide();
+     
+      // Hide and Change Text of the container with input element
+      $(this).prev('.edit').show();
+      $(this).prev('.edit').text(value);
+     
+      $.ajax({
+       url: '/update',
+       type: 'post',
+       data: {  campo:campo,
+                paciente:paciente_id,
+                procedimento:procedimento_id,
+                plano:plano_id,
+                data_atendimento:data_atendimento,
+                value:value
+              },
+       success:function(response){
+          if(response == 1){ 
+             console.log('Save successfully');
+             setInterval('location.reload()', 70);
+          }else{ 
+             console.log("Not saved.");  
+          }
+       }
+      });
+     
+     });
+     
+    });
+  </script>
+{% endblock %}
