@@ -4,7 +4,7 @@ cffi
 chardet
 click==8.0.3
 colorama==0.4.4
-conda==4.11.0
+conda
 conda-package-handling
 cryptography
 distlib==0.3.4
