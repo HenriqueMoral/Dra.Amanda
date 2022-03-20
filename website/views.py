@@ -37,10 +37,10 @@ def home():
         data_ate = form.data_ate.data
 
         if faturamento_form == "Faturado":
-            faturamento = 1
+            faturamento = True
         
         else:
-            faturamento = 0
+            faturamento = False
 
         plano_id = db.session.query(Plano).filter_by(id = plano).first()
 
