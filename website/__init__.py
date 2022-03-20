@@ -7,12 +7,12 @@ import urllib
 
 
 db = SQLAlchemy()
-#DB_NAME = "database.db"
-DB_NAME = 'Dra_Amanda'
+DB_NAME = "database.db"
+#DB_NAME = 'Dra_Amanda'
 
 def create_app():
     app = Flask(__name__, template_folder='template')
-    app.config['SECRET_KEY'] = '123456'
+    app.config['SECRET_KEY'] = 'indio222'
     #app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
 
     # params = urllib.parse.quote_plus("Driver={ODBC Driver 17 for SQL Server};SERVER=DESKTOP-QRED97F;DATABASE=Dra_Amanda;Trusted_Connection=yes")
@@ -31,7 +31,7 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
-    from .models import User, Paciente, Plano
+    from .models import User, Paciente, Plano, Procedimento, Consulta
 
     create_database(app)
 
@@ -42,6 +42,4 @@ def create_app():
     return app
 
 def create_database(app):
-    if not path.exists('website/' + DB_NAME):
-        db.create_all(app=app)
-        print('Created Database!')
+    db.create_all(app=app)
