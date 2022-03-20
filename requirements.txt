@@ -4,8 +4,7 @@ cffi==1.14.6
 chardet==4.0.0
 click==8.0.3
 colorama==0.4.4
-conda==4.11.0
-conda-package-handling==1.7.3
+conda==4.3.16
 cryptography==3.4.7
 distlib==0.3.4
 filelock==3.4.2
